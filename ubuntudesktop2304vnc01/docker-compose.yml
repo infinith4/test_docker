@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  ubuntu-gui:
+    build: ./gui
+    container_name: 'ubuntudesktop2304vnc01'
+    tty: true
+    volumes:
+      - ./src:/home/ubuntu
+    ports:
+      - 9003:6080
