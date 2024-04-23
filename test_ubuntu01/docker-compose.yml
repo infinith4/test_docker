@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  mytest:
+    build: .
+    image: hiblocka/mytest01:latest
+    container_name: mytest01
+    hostname: myhost
+    #ports:
+      # host:container
+    restart: always # これやっとくとホストPCを再起動しても自動的にコンテナ起動してくれる
