@@ -1,0 +1,19 @@
+on:
+  push:
+    branches:
+      - main
+
+name: test sample app
+jobs:
+  lint:
+    name: Lint check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm run build
+      - run: npm start
+      
