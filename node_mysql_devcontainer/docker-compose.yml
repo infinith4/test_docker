@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  # Node.js
+  app:
+    container_name: node
+    platform: linux/arm64
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    tty: true
+    ports:
+      - 3000:3000
+    # プロジェクトディレクトリにマウントする
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    # ネットワーク
+    networks:
+      - default
+
+  # データベース
+  db:
+    image: mysql:latest
+    platform: linux/arm64
+    container_name: mysql80
+    restart: always
+    # command: mysqld --initialize-insecure --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testuser
+    volumes:
+      # 設定ファイルディレクトリにマウントする
+      - ./mysql/conf.d:/etc/mysql/conf.d
+      # DB初期化ディレクトリにマウントする
+      - ./mysql/init.d:/docker-entrypoint-initdb.d
+    # ネットワーク
+    networks:
+      - default
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    platform: linux/amd64
+    container_name: phpmyadmin
+    restart: always
+    networks:
+      - default
+    depends_on:
+      - db
+    ports:
+      - 9090:80
+    volumes:
+      - ./docker/phpmyadmin/sessions:/sessions
+
+# ネットワーク
+networks:
+  default:
+    driver: bridge

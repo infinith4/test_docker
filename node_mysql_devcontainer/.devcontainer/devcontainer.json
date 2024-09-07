@@ -1,0 +1,20 @@
+{
+  "name": "node_mysql_devcontainer",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "app",
+  "features": {
+      "ghcr.io/devcontainers/features/common-utils:2": {},
+      "ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {},
+      "ghcr.io/devcontainers-community/npm-features/typescript:1": {}
+  },
+  "workspaceFolder": "/app",
+  //"remoteUser": "vscode",
+  "customizations": {
+      "vscode": {
+          "extensions": [
+            "ms-azuretools.vscode-docker",
+            "cweijan.vscode-mysql-client2"
+          ]
+      }
+  }
+}
